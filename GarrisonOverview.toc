@@ -1,0 +1,21 @@
+## Interface: 120005
+## Title: GarrisonOverview
+## Notes: An overview of all garrisons on your account.
+## IconTexture: 1005027
+## Author: Hizuro
+## Version: @project-version@
+## SavedVariables: GarrisonOverviewDB
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0, LibQTip-1.0
+
+libs/LibStub/LibStub.lua
+libs/CallbackHandler-1.0/CallbackHandler-1.0.lua
+libs/LibDataBroker-1.1/LibDataBroker-1.1.lua
+libs/LibDBIcon-1.0/LibDBIcon-1.0.lua
+libs/LibQTip-1.0/LibQTip-1.0.lua
+
+localizations.lua
+events.lua
+data.lua
+broker.lua
+#frame.xml
+
