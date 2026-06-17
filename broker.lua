@@ -74,9 +74,12 @@ local function createTooltip()
 	if not tt then return end
 	tt:Clear()
 	tt:AddHeader(addon)
-	for index, name_realm, toonName, toonRealm, data in ns.pairsByToons() do
+	for index, name_realm, toonName, toonRealm, toonClass, data in ns.pairsByToons() do
 		if not data then tt:AddSeparator(4,0,0,0,0) end
-		local l = tt:AddLine(data and toonName or name_realm)
+		if toonClass and RAID_CLASS_COLORS[toonClass] then
+			toonName = C(RAID_CLASS_COLORS[toonClass],toonName)
+		end
+		local l = tt:AddLine(data and toonName or C(color.ltyellow,name_realm))
 		if not toonRealm or (toonRealm and not ns.db.collapsed[toonRealm]) then
 			if not data then tt:AddSeparator() end
 			for i, show, str in pairsLineCells(name_realm,data,"tt") do

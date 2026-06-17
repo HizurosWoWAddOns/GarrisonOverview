@@ -2,7 +2,9 @@
 local addon, ns = ...
 local L = ns.L
 ns.realmName = GetRealmName()
-ns.playerName = UnitName("player").."-"..ns.realmName
+local _,classStr = UnitClass("player")
+ns.playerName = UnitName("player").."-"..ns.realmName.."-"..classStr
+ns.playerNameOld = UnitName("player").."-"..ns.realmName
 ns.isAlliance = UnitFactionGroup("player")=="Alliance"
 ns.isInGarrison = false
 ns.gardenBuildingID = {[29]=1,[136]=2,[137]=3}
@@ -21,7 +23,10 @@ local garrMaps = {
 local isLootObject = {
 	[233117]="garden", [235376]="garden", [228572]="garden", [235387]="garden", [235388]="garden", [235389]="garden", [235391]="garden", [235390]="garden",
 	[243313]="mine", [228564]="mine", [232543]="mine", [237360]="mine", [232542]="mine", [228453]="mine", [237359]="mine", [243312]="mine",
-	[228493]="mine", [232544]="mine", [237357]="mine", [228510]="mine", [232545]="mine", [237358]="mine", [243315]="mine", [243314]="mine",
+	[228493]="mine", [232544]="mine", [237357]="mine", [228510]="mine", [237358]="mine", [243315]="mine", [243314]="mine",
+
+	[232545]="mine",
+	--[235885]="mine",
 }
 local buildingOrder={ -- list of plotIDs
 	 1, --  1 main building
@@ -313,7 +318,10 @@ ns.event("VARIABLES_LOADED","data",function()
 	if not GarrisonOverviewDB.toons then
 		GarrisonOverviewDB.toons = {}
 	end
-	if not GarrisonOverviewDB.toons[ns.playerName] then
+	if GarrisonOverviewDB.toons[ns.playerNameOld] then
+		GarrisonOverviewDB.toons[ns.playerName] = GarrisonOverviewDB.toons[ns.playerNameOld]
+		GarrisonOverviewDB.toons[ns.playerNameOld] = nil
+	elseif not GarrisonOverviewDB.toons[ns.playerName] then
 		GarrisonOverviewDB.toons[ns.playerName] = ""
 	end
 	if not GarrisonOverviewDB.opts then
