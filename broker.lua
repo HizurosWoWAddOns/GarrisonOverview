@@ -6,25 +6,42 @@ local icon = 1005027
 local LDB = LibStub("LibDataBroker-1.1")
 local LDBI = LibStub("LibDBIcon-1.0")
 local LQT = LibStub("LibQTip-1.0")
-local lvlColor = {[0]=ITEM_POOR_COLOR,ITEM_GOOD_COLOR,ITEM_SUPERIOR_COLOR,ITEM_EPIC_COLOR} --ITEM_QUALITY_COLORS
+local lvlColor = {--[[ [0]=ITEM_POOR_COLOR, ]]ITEM_GOOD_COLOR,ITEM_SUPERIOR_COLOR,ITEM_EPIC_COLOR} --ITEM_QUALITY_COLORS
 local C = NORMAL_FONT_COLOR.WrapTextInColorCode
 local tt
+
+local color = {};
+do
+	local c = {
+		"ltyellow", "fff569",
+		"ltblue", "69ccf0",
+		"ltgray", "b0b0b0",
+	}
+	for i=1, #c, 2 do
+		local n, h = c[i],c[i+1]
+		local rgb={} for j=1, 6, 2 do tinsert(rgb,tonumber(h:sub(j,j+1),16)/255) end
+		local t = CopyTable(NORMAL_FONT_COLOR)
+		t.r,t.g,t.b,t.colorStr=rgb[1],rgb[2],rgb[3],"ff"..h
+		color[n]=t;
+	end
+	lvlColor[0] = color.ltgray
+end
 
 ns.broker = {}
 
 local function pairsLineCells(name_realm,data,tar)
 	local lst = {
 		false,
-		{show=true,str=GARRISON_LOCATION_TOOLTIP},
-		{show=ns.db[tar.."Shipyard"],str=L["Shipyard"]},
-		{show=ns.db[tar.."Garden"],str=L["Garden"]},
-		{show=ns.db[tar.."Mine"],str=L["Mine"]},
-		{show=ns.db[tar.."Cache"],str=GARRISON_CACHE},
+		{show=true,str=C(color.ltyellow,GARRISON_LOCATION_TOOLTIP)},
+		{show=ns.db[tar.."Shipyard"],str=C(color.ltyellow,L["Shipyard"])},
+		{show=ns.db[tar.."Garden"],str=C(color.ltyellow,L["Garden"])},
+		{show=ns.db[tar.."Mine"],str=C(color.ltyellow,L["Mine"])},
+		{show=ns.db[tar.."Cache"],str=C(color.ltyellow,GARRISON_CACHE)},
 		--{show=ns.db.ttResources,str=""},
 	}
 	if data then
 		if data.buildings==0 then
-			lst[2].str=C(GRAY_FONT_COLOR,NONE_KEY)
+			lst[2].str=C(color.ltgray,NONE_KEY)
 			lst[3].str=""
 			lst[4].str=""
 			lst[5].str=""
