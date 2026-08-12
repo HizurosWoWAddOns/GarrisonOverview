@@ -1,4 +1,4 @@
-## Interface: 120007, 120005
+## Interface: 120100
 ## Title: GarrisonOverview
 ## Notes: An overview of all garrisons on your account.
 ## IconTexture: 1005027
